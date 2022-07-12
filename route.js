@@ -60,6 +60,85 @@ app.get("/listarUsuarios", (req, res) => {
   });
 });
 
+app.post("/editar", (req, res)=> {
+  const id = req.body.id;
+
+  //VERIFICANDO SE O ID EXISTE
+
+  Usuario.findByPk(id).then((value)=>{
+    return res.render("editar", {error: false, id: value.id, nome: value.nome, email: value.email});
+  }).catch((err) => {
+    console.log('erro: '+ err);
+    return res.render("editar", {error: true, message: "não foi possivel editar este usuário!"});
+  })
+
+})
+
+app.post("/update", (req,res)=> {
+
+  var id = req.body.id;
+  var nome = req.body.nome;
+  var email = req.body.email;
+
+  const erros = [];
+
+  //removendo espaços em brancos
+  nome = nome.trim();
+  email = email.trim();
+
+  // Nome vazio
+  if (typeof nome == undefined || nome == "" || nome == null) {
+    erros.push({ message: "Este nome é vazio!" });
+  }
+
+  //nome valido - APENAS LETRAS
+
+  regex_nome_valido = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
+
+  if (!regex_nome_valido.test(nome)) {
+    erros.push({ message: "Este nome é inválido!" });
+  }
+
+  //email nào pode ser vazio!
+
+  if (email == "" || typeof email == undefined || email == null) {
+    erros.push({ message: "Email não pode ser vazio!" });
+  }
+
+  //email valido
+
+  regex_email_valido =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+  if (!regex_email_valido.test(email)) {
+    erros.push({ message: "Email inválido!" });
+  }
+
+  //QUANDO TEM ERROS
+
+  if (erros.length > 0) {
+    console.log(erros);
+    return res.status(400).send({status: 400, erros: erros});
+  }
+
+
+  //EM CASO DE SUCESSO
+
+  Usuario.update({
+    nome: nome,
+    email: email.toLowerCase()
+  }, {
+    where: {
+      id: id
+    }
+  }).then((resultado) =>{
+    console.log(resultado);
+    return res.redirect('listarUsuarios')
+  }).catch((err) => {
+    console.log(err);
+  })
+})
+
 app.post("/cadastrar", (req, res) => {
   nome = req.body.nome;
   email = req.body.email;

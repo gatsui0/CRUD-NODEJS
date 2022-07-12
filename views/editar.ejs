@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Cadastro</title>
+  </head>
+  <body>
+    <Header>
+      <li>
+        <ul>
+          <a href="/">Cadastrar </a>
+        </ul>
+        <ul>
+          <a href="/listarUsuarios">Lista de Usuários </a>
+        </ul>
+      </li>
+    </Header>
+
+    <main class="main">
+      <h1>Editar</h1>
+
+      <% if(!error){ %>
+
+      <form action="/update" method="post">
+        <div class="row">
+          <div class="container-nome">
+            <label for="nome">Nome</label>
+            <input type="hidden" name="id" type="text" value="<%= id %>" />
+            <input name="nome" type="text" value="<%= nome %>" />
+          </div>
+          <div class="container-email">
+            <label for="email">E-mail</label>
+            <input name="email" type="email" value="<%= email %>" />
+          </div>
+          <button autofocus>Enviar</button>
+        </div>
+      </form>
+      <% } else {%>
+      <p><%= message %></p>
+      <% } %>
+    </main>
+  </body>
+</html>

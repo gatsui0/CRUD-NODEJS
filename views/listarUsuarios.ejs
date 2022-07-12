@@ -38,10 +38,16 @@
           <td>
             <div class="container-bottom">
               <div>
-                <a>editar</a>
+                <form action="/editar" method="post">
+                  <input type="text" hidden name="id" value="<%= item.id %>">
+                  <button >Editar</button>
+                </form>
               </div>
               <div>
-                <a>excluir</a>
+                <form action="" method="">
+                  <input type="text" hidden name="id" value="<%= item.id %>">
+                  <button >Excluir</button>
+                </form>
               </div>
             </div>
           </td>
