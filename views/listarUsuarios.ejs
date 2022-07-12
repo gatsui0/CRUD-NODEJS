@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Listagem de Usuários</title>
+  </head>
+  <body>
+    <Header>
+      <li>
+        <ul>
+          <a href="/">Cadastrar </a>
+        </ul>
+        <ul>
+          <a href="/listarUsuarios">Lista de Usuários </a>
+        </ul>
+      </li>
+    </Header>
+    <h1>Lista de Usuários</h1>
+
+    <main>
+      <% if(table){ %>
+      <table>
+        <thead>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Email</th>
+          <th scope="col">Ações</th>
+        </thead>
+
+        <% users.forEach(function(item) { %>
+        <tr>
+          <th scope="row"><%= item.id %></th>
+          <td><%= item.nome %></td>
+          <td><%= item.email %></td>
+          <td>
+            <div class="container-bottom">
+              <div>
+                <a>editar</a>
+              </div>
+              <div>
+                <a>excluir</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <% }); %>
+      </table>
+      <% }else { %>
+      <p>Nenhum usuário encontrado!</p>
+      <% } %>
+    </main>
+  </body>
+</html>
