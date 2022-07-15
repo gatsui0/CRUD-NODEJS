@@ -139,6 +139,24 @@ app.post("/update", (req,res)=> {
   })
 })
 
+app.post("/excluir", (req, res) => {
+
+  var id = req.body.id;
+
+  Usuario.destroy({
+    where: {
+      id: id
+    }
+  }).then(()=> {
+    console.log("excluido com sucesso!");
+    res.redirect("listarUsuarios");
+  }).catch((err)=> {
+    console.log("erro: " + err);
+    res.redirect("listarUsuarios");
+  })
+
+})
+
 app.post("/cadastrar", (req, res) => {
   nome = req.body.nome;
   email = req.body.email;
